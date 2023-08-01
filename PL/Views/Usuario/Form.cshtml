@@ -1,0 +1,76 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row text-center">
+        <h1>@ViewBag.Titulo</h1>
+        <hr />
+    </div>
+    <br />
+    <div class="row">
+        <p><b>INSTUCCIONES</b></p>
+        <p><b>1.- </b>Ingrese un la información del usuario</p>
+        <hr />
+    </div>
+    <br />
+    @using (Html.BeginForm("Form", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label" })
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.Nombre, new { @class = "control-label" })
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Nombre)
+                </div>
+            </div>
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.ApellidoPaterno, new { @class = "control-label" })
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ApellidoPaterno)
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                @Html.LabelFor(model => model.ApellidoMaterno, new { @class = "control-label" })
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="bi bi-person-circle"></i></span>
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control", id = "txtNombre", onclick = "colores()" })
+                    @Html.ValidationMessageFor(model => model.ApellidoMaterno)
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success col-md-12"> @ViewBag.Accion</button>
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink("Regresar", "LoginUsuario", "Usuario", "", new { @class = "btn btn-danger col-md-12" })
+            </div>
+        </div>
+    }
+</div>
+

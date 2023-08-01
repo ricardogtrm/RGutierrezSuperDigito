@@ -1,0 +1,106 @@
+﻿@model ML.SuperDigito
+@{
+    ViewBag.Title = "GetByIdUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row text-center">
+        <h1>SUPER DIGITOS</h1>
+        <hr />
+    </div>
+    <br />
+    <div class="row">
+        <p><b>INSTUCCIONES</b></p>
+        <p><b>1.- </b>Ingrese un numero en la caja de texto</p>
+        <p><b>2.- </b>Presione el boton "Calcular"</p>
+        <p><b>3.- </b>En caso de querer eliminar su historial precione "Borrar historial"</p>
+        <hr />
+    </div>
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("CalcularSuperDigito", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="col-md-4">
+                <label class="contol-label">Ingrese un numero</label>
+                <div>
+                    @Html.TextBoxFor(model => model.Digito, "", new { @class = "form-control col-md-12", placeholder = "Ingrese un numero", id = "txtDigito" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label class="contol-label">Resultado</label>
+                <div>
+                    @Html.TextBoxFor(model => model.Resultado, "", new { @class = "form-control col-md-12", placeholder = "Resultado", contenteditable = "false", id = "txtResultado" })
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label class="contol-label">.</label>
+                <div>
+                    <button type="submit" class="btn btn-success bi bi-calculator-fill col-md-6"> Insertar</button>
+                </div>
+            </div>
+            <div>
+                <div>
+                    @Html.TextBoxFor(model => model.Usuario.IdUsuario, "", new { @class = "form-control col-md-12 hidden", placeholder = "Resultado", @contenteditable = "false" })
+                </div>
+            </div>
+            <button type="button" class="btn btn-success bi bi-calculator-fill col-md-6" id="btnCalcular"> Calcular</button>
+        }
+    </div>
+    <br />
+    <div class="row">
+        @if (Model.SuperDigitos != null)
+        {
+            <table class="table table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th scope="col">ID SUPER DIGITO</th>
+                        <th scope="col">NUMERO</th>
+                        <th scope="col">RESULTADO</th>
+                        <th scope="col">FECHA CONSULTA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.SuperDigito superDigito in Model.SuperDigitos)
+                    {
+                        <tr>
+                            <td>@superDigito.IdSuperDigito</td>
+                            <td>@superDigito.Digito</td>
+                            <td>@superDigito.Resultado</td>
+                            <td>@superDigito.FechaConsulta</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Message
+            </div>
+        }
+    </div>
+    <br />
+    <div class="row">
+        <a href="@Url.Action("Delete", "Usuario", new {IdSuperDigito = Model.Usuario.IdUsuario})" class="btn btn-danger"><i class="bi bi-trash3-fill"> Eliminar historial</i></a>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () { //Queda al pendiente de el documento y cuando este lista se activa la siguiente funcion
+        $("#btnCalcular").click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("CalcularSuper")',
+                dataType: 'json',
+                data: { digito: $("#txtDigito").val() },
+                success: function (resultado) {
+                    $("#txtResultado").val(resultado);
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+        });
+    });
+</script>

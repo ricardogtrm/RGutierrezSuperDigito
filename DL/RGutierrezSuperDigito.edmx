@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RGutierrezSuperDigitoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SuperDigito">
+          <Key>
+            <PropertyRef Name="IdSuperDigito" />
+          </Key>
+          <Property Name="IdSuperDigito" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Digito" Type="int" Nullable="false" />
+          <Property Name="Resultado" Type="int" Nullable="false" />
+          <Property Name="FechaConsulta" Type="datetime" />
+          <Property Name="IdUsuario" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_UsuarioSuperDigito">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="SuperDigito" Type="Self.SuperDigito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="SuperDigito">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SuperDigitoAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Digito" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="In" />
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SuperDigitoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SuperDigitoGetByIdUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SuperDigitoGetByNumero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Numero" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SuperDigitoUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSuperDigito" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UsuarioAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoPaterno" Type="varchar" Mode="In" />
+          <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UsuarioGetByUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="RGutierrezSuperDigitoModelStoreContainer">
+          <EntitySet Name="SuperDigito" EntityType="Self.SuperDigito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UsuarioSuperDigito" Association="Self.FK_UsuarioSuperDigito">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SuperDigito" EntitySet="SuperDigito" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RGutierrezSuperDigitoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="SuperDigito">
+          <Key>
+            <PropertyRef Name="IdSuperDigito" />
+          </Key>
+          <Property Name="IdSuperDigito" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Digito" Type="Int32" Nullable="false" />
+          <Property Name="Resultado" Type="Int32" Nullable="false" />
+          <Property Name="FechaConsulta" Type="DateTime" Precision="3" />
+          <Property Name="IdUsuario" Type="Byte" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioSuperDigito" FromRole="SuperDigito" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SuperDigitoes" Relationship="Self.FK_UsuarioSuperDigito" FromRole="Usuario" ToRole="SuperDigito" />
+        </EntityType>
+        <Association Name="FK_UsuarioSuperDigito">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="SuperDigito" Type="Self.SuperDigito" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="SuperDigito">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RGutierrezSuperDigitoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SuperDigitoes" EntityType="Self.SuperDigito" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_UsuarioSuperDigito" Association="Self.FK_UsuarioSuperDigito">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="SuperDigito" EntitySet="SuperDigitoes" />
+          </AssociationSet>
+          <FunctionImport Name="UsuarioAdd">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
+            <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UsuarioGetByUserName" ReturnType="Collection(RGutierrezSuperDigitoModel.UsuarioGetByUserName_Result)">
+          <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoAdd">
+            <Parameter Name="Digito" Mode="In" Type="Int32" />
+            <Parameter Name="Resultado" Mode="In" Type="Int32" />
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoGetByIdUsuario" ReturnType="Collection(RGutierrezSuperDigitoModel.SuperDigitoGetByIdUsuario_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoDelete">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoGetByNumero" ReturnType="Collection(RGutierrezSuperDigitoModel.SuperDigitoGetByNumero_Result)">
+            <Parameter Name="Numero" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoUpdate">
+            <Parameter Name="IdSuperDigito" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="UsuarioGetByUserName_Result">
+          <Property Type="Byte" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SuperDigitoGetByIdUsuario_Result">
+          <Property Type="Byte" Name="IdSuperDigito" Nullable="false" />
+          <Property Type="Int32" Name="Digito" Nullable="false" />
+          <Property Type="Int32" Name="Resultado" Nullable="false" />
+          <Property Type="DateTime" Name="FechaConsulta" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="SuperDigitoGetByNumero_Result">
+          <Property Type="Byte" Name="IdSuperDigito" Nullable="false" />
+          <Property Type="Int32" Name="Digito" Nullable="false" />
+          <Property Type="Int32" Name="Resultado" Nullable="false" />
+          <Property Type="DateTime" Name="FechaConsulta" Nullable="true" Precision="23" />
+          <Property Type="Byte" Name="IdUsuario" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RGutierrezSuperDigitoModelStoreContainer" CdmEntityContainer="RGutierrezSuperDigitoEntities">
+          <EntitySetMapping Name="SuperDigitoes">
+            <EntityTypeMapping TypeName="RGutierrezSuperDigitoModel.SuperDigito">
+              <MappingFragment StoreEntitySet="SuperDigito">
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Digito" ColumnName="Digito" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="FechaConsulta" ColumnName="FechaConsulta" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="RGutierrezSuperDigitoModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UsuarioAdd" FunctionName="RGutierrezSuperDigitoModel.Store.UsuarioAdd" />
+          <FunctionImportMapping FunctionImportName="UsuarioGetByUserName" FunctionName="RGutierrezSuperDigitoModel.Store.UsuarioGetByUserName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RGutierrezSuperDigitoModel.UsuarioGetByUserName_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SuperDigitoAdd" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoAdd" />
+          <FunctionImportMapping FunctionImportName="SuperDigitoGetByIdUsuario" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoGetByIdUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RGutierrezSuperDigitoModel.SuperDigitoGetByIdUsuario_Result">
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Digito" ColumnName="Digito" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="FechaConsulta" ColumnName="FechaConsulta" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SuperDigitoDelete" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoDelete" />
+          <FunctionImportMapping FunctionImportName="SuperDigitoGetByNumero" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoGetByNumero">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RGutierrezSuperDigitoModel.SuperDigitoGetByNumero_Result">
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Digito" ColumnName="Digito" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="FechaConsulta" ColumnName="FechaConsulta" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SuperDigitoUpdate" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoUpdate" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

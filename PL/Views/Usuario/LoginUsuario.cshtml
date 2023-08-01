@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "LoginUsuario";
+    Layout = null;
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="~/Content/Login.css" />
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+@using (Html.BeginForm("GetByUserName", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <form>
+        <h3>Login Here</h3>
+        <label for="username">UserName</label>
+        <input type="text" placeholder="Nombre de usuario" id="userName" name="userName">
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" name="password">
+
+        <button type="submit">Iniciar sesion</button>
+
+        <div class="social text-center">
+            @Html.ActionLink(" Registrarse", "Form", "Usuario","", new { @class = "bi bi-person-plus-fill" })
+        </div>
+    </form>
+}
