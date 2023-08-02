@@ -27,7 +27,7 @@ namespace BL
                             superDigito.Resultado = item.Resultado;
                             superDigito.FechaConsulta = item.FechaConsulta.Value.ToString();
                             superDigito.Usuario = new ML.Usuario();
-                            superDigito.Usuario.IdUsuario = item.IdSuperDigito;
+                            superDigito.Usuario.IdUsuario = item.IdUsuario.Value;
 
                             result.Objects.Add(superDigito);
                         }
@@ -55,6 +55,29 @@ namespace BL
                     {
                         result.Correct = true;
                         result.Message = "Historial eliminado";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = true;
+                result.Message = ex.Message;
+            }
+            return result;
+        }
+
+        public static ML.Result DeleteById(int idSuperDigito)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL.RGutierrezSuperDigitoEntities context = new DL.RGutierrezSuperDigitoEntities())
+                {
+                    int query = context.SuperDigitoDeleteById(idSuperDigito);
+                    if (query > 0)
+                    {
+                        result.Correct = true;
+                        result.Message = "Registro eliminado";
                     }
                 }
             }

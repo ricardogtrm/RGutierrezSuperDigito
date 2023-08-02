@@ -81,15 +81,6 @@ namespace DL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SuperDigitoAdd", digitoParameter, resultadoParameter, idUsuarioParameter);
         }
     
-        public virtual ObjectResult<SuperDigitoGetByIdUsuario_Result> SuperDigitoGetByIdUsuario(Nullable<int> idUsuario)
-        {
-            var idUsuarioParameter = idUsuario.HasValue ?
-                new ObjectParameter("IdUsuario", idUsuario) :
-                new ObjectParameter("IdUsuario", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SuperDigitoGetByIdUsuario_Result>("SuperDigitoGetByIdUsuario", idUsuarioParameter);
-        }
-    
         public virtual int SuperDigitoDelete(Nullable<int> idUsuario)
         {
             var idUsuarioParameter = idUsuario.HasValue ?
@@ -115,6 +106,24 @@ namespace DL
                 new ObjectParameter("IdSuperDigito", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SuperDigitoUpdate", idSuperDigitoParameter);
+        }
+    
+        public virtual int SuperDigitoDeleteById(Nullable<int> idSuperDigito)
+        {
+            var idSuperDigitoParameter = idSuperDigito.HasValue ?
+                new ObjectParameter("IdSuperDigito", idSuperDigito) :
+                new ObjectParameter("IdSuperDigito", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SuperDigitoDeleteById", idSuperDigitoParameter);
+        }
+    
+        public virtual ObjectResult<SuperDigitoGetByIdUsuario_Result> SuperDigitoGetByIdUsuario(Nullable<int> idUsuario)
+        {
+            var idUsuarioParameter = idUsuario.HasValue ?
+                new ObjectParameter("IdUsuario", idUsuario) :
+                new ObjectParameter("IdUsuario", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SuperDigitoGetByIdUsuario_Result>("SuperDigitoGetByIdUsuario", idUsuarioParameter);
         }
     }
 }

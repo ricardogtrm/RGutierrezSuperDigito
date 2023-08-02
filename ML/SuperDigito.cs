@@ -14,5 +14,6 @@ namespace ML
         public string FechaConsulta { get; set; }
         public ML.Usuario Usuario { get; set; }
         public List<object> SuperDigitos { get; set; }
+        public List<string> Resultados { get; set; }
     }
 }

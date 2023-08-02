@@ -46,6 +46,9 @@
         <Function Name="SuperDigitoDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="int" Mode="In" />
         </Function>
+        <Function Name="SuperDigitoDeleteById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSuperDigito" Type="int" Mode="In" />
+        </Function>
         <Function Name="SuperDigitoGetByIdUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdUsuario" Type="int" Mode="In" />
         </Function>
@@ -134,17 +137,20 @@
             <Parameter Name="Resultado" Mode="In" Type="Int32" />
             <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SuperDigitoGetByIdUsuario" ReturnType="Collection(RGutierrezSuperDigitoModel.SuperDigitoGetByIdUsuario_Result)">
-          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SuperDigitoDelete">
           <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SuperDigitoGetByNumero" ReturnType="Collection(RGutierrezSuperDigitoModel.SuperDigitoGetByNumero_Result)">
-            <Parameter Name="Numero" Mode="In" Type="Int32" />
+          <Parameter Name="Numero" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SuperDigitoUpdate">
-            <Parameter Name="IdSuperDigito" Mode="In" Type="Int32" />
+          <Parameter Name="IdSuperDigito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoDeleteById">
+          <Parameter Name="IdSuperDigito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SuperDigitoGetByIdUsuario" ReturnType="Collection(RGutierrezSuperDigitoModel.SuperDigitoGetByIdUsuario_Result)">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="UsuarioGetByUserName_Result">
@@ -155,13 +161,14 @@
           <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="SuperDigitoGetByIdUsuario_Result">
+        <ComplexType Name="SuperDigitoGetByNumero_Result">
           <Property Type="Byte" Name="IdSuperDigito" Nullable="false" />
           <Property Type="Int32" Name="Digito" Nullable="false" />
           <Property Type="Int32" Name="Resultado" Nullable="false" />
           <Property Type="DateTime" Name="FechaConsulta" Nullable="true" Precision="23" />
+          <Property Type="Byte" Name="IdUsuario" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="SuperDigitoGetByNumero_Result">
+        <ComplexType Name="SuperDigitoGetByIdUsuario_Result">
           <Property Type="Byte" Name="IdSuperDigito" Nullable="false" />
           <Property Type="Int32" Name="Digito" Nullable="false" />
           <Property Type="Int32" Name="Resultado" Nullable="false" />
@@ -211,16 +218,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SuperDigitoAdd" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoAdd" />
-          <FunctionImportMapping FunctionImportName="SuperDigitoGetByIdUsuario" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoGetByIdUsuario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RGutierrezSuperDigitoModel.SuperDigitoGetByIdUsuario_Result">
-                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
-                <ScalarProperty Name="Digito" ColumnName="Digito" />
-                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
-                <ScalarProperty Name="FechaConsulta" ColumnName="FechaConsulta" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SuperDigitoDelete" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoDelete" />
           <FunctionImportMapping FunctionImportName="SuperDigitoGetByNumero" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoGetByNumero">
             <ResultMapping>
@@ -234,6 +231,18 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SuperDigitoUpdate" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoUpdate" />
+          <FunctionImportMapping FunctionImportName="SuperDigitoDeleteById" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoDeleteById" />
+          <FunctionImportMapping FunctionImportName="SuperDigitoGetByIdUsuario" FunctionName="RGutierrezSuperDigitoModel.Store.SuperDigitoGetByIdUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RGutierrezSuperDigitoModel.SuperDigitoGetByIdUsuario_Result">
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Digito" ColumnName="Digito" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="FechaConsulta" ColumnName="FechaConsulta" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

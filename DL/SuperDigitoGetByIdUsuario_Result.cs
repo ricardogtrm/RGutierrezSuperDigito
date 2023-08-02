@@ -17,5 +17,6 @@ namespace DL
         public int Digito { get; set; }
         public int Resultado { get; set; }
         public Nullable<System.DateTime> FechaConsulta { get; set; }
+        public Nullable<byte> IdUsuario { get; set; }
     }
 }

@@ -110,6 +110,28 @@ namespace PL.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult DeleteById(int idSuperDigito, int idUsuario)
+        {
+            ML.Result result = BL.SuperDigito.DeleteById(idSuperDigito);
+            if (result.Correct)
+            {
+                ViewBag.Titulo = "Registro eliminado";
+                ViewBag.Message = result.Message;
+                ML.Usuario usuario = new ML.Usuario();
+                usuario.IdUsuario = idUsuario;
+                return View("ModalGlobal", usuario);
+            }
+            else
+            {
+                ViewBag.Titulo = "No se elimino el registro";
+                ViewBag.Message = result.Message;
+                ML.Usuario usuario = new ML.Usuario();
+                usuario.IdUsuario = idUsuario;
+                return View("ModalGlobal", usuario);
+            }
+        }
+
         [HttpPost]
         public ActionResult CalcularSuperDigito(ML.SuperDigito superDigito)
         {
@@ -130,42 +152,61 @@ namespace PL.Controllers
         public JsonResult CalcularSuper(int digito)
         {
             ML.SuperDigito superDigito = new ML.SuperDigito();
-            superDigito.Resultado = Calcular(digito);
-            return Json(superDigito.Resultado, JsonRequestBehavior.AllowGet);
+            superDigito.Resultados = new List<string>();
+            superDigito.Resultado = Calcular(digito, superDigito.Resultados);
+            return Json(superDigito, JsonRequestBehavior.AllowGet);
 
         }
 
-        public static int Calcular(int digito)
+        public static int Calcular(int digito, List<string> proceso)
         {
+            proceso.Add("SuperDigito(" + digito + ")");
             if (digito <= 9)
             {
                 return digito;
             }
             else
             {
-                int superDigito = CalcularDetalle(digito);
+                int superDigito = CalcularDetalle(digito, proceso);
                 return superDigito;
             }
 
         }
 
-        public static int CalcularDetalle(int digito)
+        public static int CalcularDetalle(int digito, List<string> proceso)
         {
             string valor = digito.ToString();
             char[] numeros = valor.ToCharArray();
             int superDigito = 0;
+            string itemToList = "SuperDigito(";
+            int cont = 0;
             foreach (char num in numeros)
             {
+                cont++;
                 int number = int.Parse(num.ToString());
                 superDigito = superDigito + number;
+                if (cont == 1)
+                {
+                    itemToList = itemToList + number + "+";
+                }
+                else if (cont < numeros.Length)
+                {
+                    itemToList = itemToList + number + "+";
+                }
+                else
+                {
+                    itemToList = itemToList + number;
+                }
             }
+            proceso.Add(itemToList + ") = " + superDigito);
             if (superDigito <= 9)
             {
+                proceso.Add("SuperDigito(" + superDigito + ")");
                 return superDigito;
             }
             else
             {
-                return CalcularDetalle(superDigito);
+                return CalcularDetalle(superDigito, proceso);
             }
         }
     }
